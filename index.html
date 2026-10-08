@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>غرفة الدراسة 🌷</title>
+<style>
+body{margin:0;background:#fff5fa;color:#68475a;font-family:Arial,sans-serif;text-align:center}
+main{max-width:600px;margin:auto;padding:20px}
+.card{background:white;padding:22px;margin:16px 0;border-radius:22px;box-shadow:0 4px 18px #e8bfd133}
+h1{color:#bd6794}
+input{padding:13px;border:1px solid #e5bfd3;border-radius:12px;font-size:16px;width:80%}
+button{padding:12px 18px;border:0;border-radius:14px;background:#d889ae;color:white;font-size:16px;margin:5px}
+.secondary{background:#f5e2ec;color:#81536b}
+#clock{font-size:42px;margin:20px}
+</style>
+</head>
+<body>
+<main>
+<div class="card">
+<h1>🌷 غرفة الدراسة 📚</h1>
+<p>نقترب من أحلامنا، دقيقة بعد دقيقة 🤍</p>
+<input id="name" placeholder="اكتبي اسمچ">
+<button onclick="join()">دخول</button>
+</div>
+<div id="room" style="display:none">
+<div class="card">
+<h2>⏱️ مؤقّت الدراسة</h2>
+<div id="clock">00:00:00</div>
+<button onclick="start()">ابدئي الدراسة</button>
+<button class="secondary" onclick="pause()">استراحة</button>
+<p>وقت دراستچ: <b id="total">0</b> ثانية</p>
+</div>
+<div class="card">
+<h2>👥 غرفة الدارسين</h2>
+<p id="welcome"></p>
+<p>أنتِ بطريقچ للإنجاز، استمري! 🌱</p>
+</div>
+<div class="card">
+<h2>⏰ منبّه الاستراحة</h2>
+<input id="minutes" type="number" min="1" placeholder="بعد كم دقيقة؟">
+<button onclick="alarm()">ضبط المنبّه</button>
+<p id="alarmText"></p>
+</div>
+</div>
+</main>
+<script>
+let seconds=0, interval=null, alarmTimer=null;
+function join(){
+let n=document.getElementById('name').value.trim();
+if(!n){alert('اكتبي اسمچ أولاً 🌷');return;}
+document.getElementById('room').style.display='block';
+document.getElementById('welcome').textContent='أهلاً '+n+'، نورتِ الغرفة 💗';
+}
+function draw(){
+let h=String(Math.floor(seconds/3600)).padStart(2,'0');
+let m=String(Math.floor(seconds%3600/60)).padStart(2,'0');
+let s=String(seconds%60).padStart(2,'0');
+document.getElementById('clock').textContent=h+':'+m+':'+s;
+document.getElementById('total').textContent=seconds;
+}
+function start(){
+if(interval)return;
+interval=setInterval(()=>{seconds++;draw();},1000);
+}
+function pause(){clearInterval(interval);interval=null;}
+function alarm(){
+let m=Number(document.getElementById('minutes').value);
+if(!m||m<1){alert('اكتبي عدد الدقائق أولاً');return;}
+clearTimeout(alarmTimer);
+document.getElementById('alarmText').textContent='تم ضبط المنبّه بعد '+m+' دقيقة 🌷';
+alarmTimer=setTimeout(()=>{alert('انتهى الوقت! خذي استراحة قصيرة يا بطلة 🌸');},m*60000);
+}
+</script>
+</body>
+</html>
